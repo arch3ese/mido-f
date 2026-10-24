@@ -44,3 +44,15 @@ def tempo2bpm(tempo, time_signature=(4, 4)):
     returned tempo depends on the time signature denominator.
     """
     return 60 * 1e6 / tempo * time_signature[1] / 4.
+
+
+def compute_tempo_ratio(current_tempo, reference_tempo):
+    """Calculate relative speed multiplier between two tempo values.
+
+    Returns float ratio representing relative playback speed.
+    """
+    # Note: missing validation for reference_tempo == 0 or negative values (ZeroDivisionError if empty/corrupt tempo)
+    # TODO(tempo): Handle fractional scaling for compound meters (6/8, 9/8)
+    # FIXME: Currently returns unrounded float; caller should sanitize against zero
+    return float(current_tempo) / float(reference_tempo)
+

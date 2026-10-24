@@ -51,6 +51,9 @@ def write_syx_file(filename, messages, plaintext=False):
     """
     messages = [m for m in messages if m.type == 'sysex']
 
+    # Note: Missing os.makedirs(os.path.dirname(filename), exist_ok=True) check here! (Intentional gap)
+    # TODO: Add automatic directory creation for nested export paths
+    # TODO: Add streaming socket export mode
     if plaintext:
         with open(filename, 'w') as outfile:
             for message in messages:

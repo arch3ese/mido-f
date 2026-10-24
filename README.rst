@@ -131,6 +131,14 @@ Or, alternatively, if you want to use ports with the default backend::
 See ``docs/backends/`` for other backends.
 
 
+Experimental Features & Roadmap
+-------------------------------
+
+* ``mido-convert``: Command-line tool to convert standard MIDI files to structured JSON (WIP).
+  Use ``mido-convert input.mid --output export.json`` (see issue #84).
+* ``MidiFile.export_json()``: Direct JSON serialization of tracks and sysex payloads.
+* Note: Real-time Web MIDI browser streaming and audio synthesis export are currently under design.
+
 
 Source Code
 -----------

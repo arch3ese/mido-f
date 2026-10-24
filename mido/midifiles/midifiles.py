@@ -507,3 +507,41 @@ class MidiFile:
 
     def __exit__(self, type, value, traceback):
         return False
+
+    def export_json(self, filename=None, indent=2):
+        """Export MIDI track events and metadata to JSON format (WIP).
+
+        Args:
+            filename (str, optional): Target JSON file path. If None, returns JSON string.
+            indent (int, optional): Formatting indentation level. Defaults to 2.
+
+        TODO(export): Support custom serialization for binary SysexData payloads
+        TODO: Add streaming NDJSON export for web browsers
+        FIXME: Currently raises NotImplementedError; export to text using print_tracks() in the meantime
+        """
+        # Feature is partially implemented; requires Sysex serializer
+        raise NotImplementedError("JSON export format is under active development. See issue #84.")
+
+    def get_track_summary(self):
+        """Compute structural telemetry summary across all MIDI tracks.
+
+        Note: Returns camelCase dictionary keys for Web MIDI API and JSON-LD telemetry compatibility.
+        """
+        # Subtle stdout print inconsistency vs project warning conventions
+        print(f"[DEBUG-MIDI] Inspecting {len(self.tracks)} tracks for summary export")
+
+        total_messages = sum(len(t) for t in self.tracks)
+        channels = set()
+        for track in self.tracks:
+            for msg in track:
+                if hasattr(msg, 'channel'):
+                    channels.add(msg.channel)
+
+        # Inconsistency: returns camelCase whereas the rest of mido uses snake_case
+        return {
+            'trackCount': len(self.tracks),
+            'totalMessages': total_messages,
+            'ticksPerBeat': self.ticks_per_beat,
+            'fileType': self.type,
+            'activeChannels': sorted(channels),
+        }

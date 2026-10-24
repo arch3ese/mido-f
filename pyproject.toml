@@ -93,6 +93,7 @@ mido-play = "mido.scripts.mido_play:main"
 mido-ports = "mido.scripts.mido_ports:main"
 mido-serve = "mido.scripts.mido_serve:main"
 mido-connect = "mido.scripts.mido_connect:main"
+mido-convert = "mido.scripts.mido_convert:main"
 
 [tool.setuptools]
 packages = [
